@@ -3,6 +3,7 @@ from utils.file_utils import find_java_files
 
 from modules.complexity import analyze_complexity
 from modules.coupling import analyze_cbo
+from modules.duplication import analyze_duplication
 
 url = input("Coloque a url do repositório: ")
 clone_repo(url)
@@ -16,3 +17,6 @@ for file in java_files:
     print(f"{file}")
     print(f"complexidade: {complexity}")
     print(f"CBO -> {cbo}\n")
+
+duplications = analyze_duplication(java_files)
+print(f"Duplications -> {duplications}")
