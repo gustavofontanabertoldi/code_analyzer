@@ -4,12 +4,14 @@ from utils.file_utils import find_java_files
 from modules.complexity import analyze_complexity
 from modules.coupling import analyze_cbo
 from modules.duplication import analyze_duplication
+from modules.benchmark import run_benchmark
 
 url = input("Coloque a url do repositório: ")
 clone_repo(url)
 
 java_files = find_java_files("temp/repo")
 
+print("\n===== ANÁLISE =====\n")
 for file in java_files:
     complexity = analyze_complexity(file)
     cbo = analyze_cbo(file)
@@ -20,3 +22,6 @@ for file in java_files:
 
 duplications = analyze_duplication(java_files)
 print(f"Duplications -> {duplications}")
+
+print("\n===== BENCHMARK =====\n")
+benchmark = run_benchmark("temp/repo")
