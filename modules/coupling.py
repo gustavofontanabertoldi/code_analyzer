@@ -1,12 +1,10 @@
 import javalang
+from utils.java_parser import parse_java_file
 
 def analyze_cbo(path):
     used_classes = set()
     try:
-        with open(path, "r", encoding="utf-8") as file:
-            data = file.read()
-
-        tree = javalang.parse.parse(data)
+        tree = parse_java_file(path)
 
         for p, node in tree:
             if isinstance(node, javalang.tree.FieldDeclaration):
