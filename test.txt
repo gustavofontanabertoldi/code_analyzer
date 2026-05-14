@@ -1,0 +1,2 @@
+Testar antes de continuar com este repositório de exemplo:
+https://github.com/RameshMF/spring-boot2-jpa-crud-example
