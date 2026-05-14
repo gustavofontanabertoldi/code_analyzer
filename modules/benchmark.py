@@ -1,15 +1,9 @@
-import subprocess
 import time
 import requests
 from config import DEFAULT_ENDPOINT
 
-def run_benchmark(repo_path):
+def run_benchmark():
     try:
-        process = subprocess.Popen(
-            ["mvn", "spring-boot:run"],
-            cwd=repo_path
-        )
-        time.sleep(15)
         init = time.time()
         response = requests.get(
             f"http://localhost:8080{DEFAULT_ENDPOINT}",
@@ -19,7 +13,6 @@ def run_benchmark(repo_path):
         end = time.time()
         latency = end - init
         print(f"Latência -> {latency:.4f} segundos")
-        process.terminate()
         return latency
 
     except Exception as e:
