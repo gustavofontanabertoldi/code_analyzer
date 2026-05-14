@@ -1,6 +1,7 @@
 import subprocess
 import time
 import requests
+from config import DEFAULT_ENDPOINT
 
 def run_benchmark(repo_path):
     try:
@@ -10,10 +11,11 @@ def run_benchmark(repo_path):
         )
         time.sleep(15)
         init = time.time()
-        requests.get(
-            "http://localhost:8080",
+        response = requests.get(
+            f"http://localhost:8080{DEFAULT_ENDPOINT}",
             timeout=10
         )
+        print(response.status_code)
         end = time.time()
         latency = end - init
         print(f"Latência -> {latency:.4f} segundos")
