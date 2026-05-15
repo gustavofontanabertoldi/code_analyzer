@@ -9,6 +9,8 @@ from modules.benchmark import run_benchmark
 from modules.report import generate_results
 from modules.latency import analyze_latency
 
+from config import REPO_DIR
+
 # Pega o link do repositório
 url = input("Coloque a url do repositório: ")
 
@@ -16,7 +18,7 @@ url = input("Coloque a url do repositório: ")
 clone_repo(url)
 
 #Filtra os arquivos .java de outros arquivos (Conferir utils/file_utils)
-java_files = find_java_files("temp/repo")
+java_files = find_java_files(REPO_DIR)
 
 #lista de dados das análises dos arquivos.java
 results = []
@@ -39,7 +41,7 @@ for file in java_files:
 duplications = analyze_duplication(java_files)
 
 #Faz os testes de latencia do servidor java/spring-boot
-process = init_server("temp/repo")
+process = init_server(REPO_DIR)
 try:
     #Conferir modules/benchmark e modules/latency
     benchmark = run_benchmark()

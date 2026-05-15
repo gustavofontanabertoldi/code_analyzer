@@ -1,6 +1,6 @@
 import time
 import requests
-from config import DEFAULT_ENDPOINT
+from config import DEFAULT_ENDPOINT, SERVER_URL
 
 def analyze_latency():
         loads = [100, 500, 1000]
@@ -11,7 +11,7 @@ def analyze_latency():
                 init = time.time()
                 for i in range(load):
                     requests.get(
-                        f"http://localhost:8080{DEFAULT_ENDPOINT}",
+                        f"{SERVER_URL}{DEFAULT_ENDPOINT}",
                         timeout=10
                     )
                 end = time.time()

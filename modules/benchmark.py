@@ -1,12 +1,12 @@
 import time
 import requests
-from config import DEFAULT_ENDPOINT
+from config import DEFAULT_ENDPOINT, SERVER_URL
 
 def run_benchmark():
     try:
         init = time.time()
         response = requests.get(
-            f"http://localhost:8080{DEFAULT_ENDPOINT}",
+            f"{SERVER_URL}{DEFAULT_ENDPOINT}",
             timeout=10
         )
         print(response.status_code)
