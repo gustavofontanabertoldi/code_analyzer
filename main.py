@@ -42,12 +42,19 @@ duplications = analyze_duplication(java_files)
 
 #Faz os testes de latencia do servidor java/spring-boot
 process = init_server(REPO_DIR)
-try:
-    #Conferir modules/benchmark e modules/latency
-    benchmark = run_benchmark()
-    latency = analyze_latency()
-finally:
-    stop_server(process)
+
+benchmark = -1
+latency = {}
+
+if process:
+    try:
+        #Conferir modules/benchmark e modules/latency
+        benchmark = run_benchmark()
+        latency = analyze_latency()
+    finally:
+        stop_server(process)
+else:
+    print("Benchmark ignorado porque o servidor não iniciou.")
 
 #Apresenta as infos
 generate_results(results, duplications, benchmark, latency)
