@@ -1,12 +1,14 @@
 import time
 import requests
-from config import DEFAULT_ENDPOINT, SERVER_URL
+from config import SERVER_URL
+from utils.endpoints_detector import detect_endpoint
 
 def run_benchmark():
+    endpoint = detect_endpoint()
     try:
         init = time.time()
         response = requests.get(
-            f"{SERVER_URL}{DEFAULT_ENDPOINT}",
+            f"{SERVER_URL}{endpoint}",
             timeout=10
         )
         print(response.status_code)

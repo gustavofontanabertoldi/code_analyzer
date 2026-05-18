@@ -53,6 +53,8 @@ else:
 benchmark = None
 latency = None
 
+
+
 if process:
     try:
         #Conferir modules/benchmark e modules/latency

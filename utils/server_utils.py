@@ -2,6 +2,7 @@ import subprocess
 import time
 import requests
 import os
+from endpoints_detector import detect_endpoint
 
 from config import (
     DEFAULT_ENDPOINT,
@@ -40,8 +41,9 @@ def init_server(repo_path):
         stderr=subprocess.PIPE,
         text=True
     )
+    endpoint = detect_endpoint()
 
-    url = f"{SERVER_URL}{DEFAULT_ENDPOINT}"
+    url = f"{SERVER_URL}{endpoint}"
 
     for _ in range(60):
 

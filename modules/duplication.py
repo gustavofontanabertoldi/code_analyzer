@@ -5,7 +5,11 @@ def analyze_duplication(java_files):
 
     for java_file in java_files:
         with open(java_file, "r", encoding="utf-8") as f:
-            lines = f.readlines()
+            lines = [
+                lines.strip()
+                for line in f.readlines()
+                if line.strip()
+            ]
 
         for i in range(len(lines) - 4):
             block = "".join(lines[i:i+5]).strip()
