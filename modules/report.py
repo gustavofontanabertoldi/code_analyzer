@@ -1,16 +1,32 @@
-def generate_results(results, duplications, benchmark, latency):
+def generate_results(results, duplications, benchmark, latency, coverage):
     print("\n===== RELATÓRIO FINAL =====\n")
     for result in results:
         print(f"Arquivo: {result['file']}")
         print(f"Complexity: {result['complexity']}")
         print(f"CBO: {result['cbo']}\n")
+        
+    print("\n===== DUPLICATIONS =====\n")
+    print(f"Duplications: {duplications}\n")
+    
+    print("\n===== COVERAGE =====\n")
 
-    print(f"Duplications: {duplications}")
+    print(
+        f"Arquivos de teste: "
+        f"{coverage['test_files']}\n"
+    )
+    print(
+        f"Arquivos Java: "
+        f"{coverage['total_java_files']}\n"
+    )
+    print(
+        f"Cobertura estimada: "
+        f"{coverage['coverage']}%\n"
+    )
 
     if benchmark == None:
         print(f"Benchmark: SKIPPED")
     else:
-        print(f"Benchmark: {benchmark}\n")
+        print(f"Benchmark: {benchmark}")
     
     print("\n===== LATENCY =====\n")
     if latency == None:

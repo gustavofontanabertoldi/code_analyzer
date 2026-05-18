@@ -9,6 +9,7 @@ from modules.duplication import analyze_duplication
 from modules.benchmark import run_benchmark
 from modules.report import generate_results
 from modules.latency import analyze_latency
+from modules.coverage import analyze_coverage
 
 from config import REPO_DIR
 
@@ -41,6 +42,9 @@ for file in java_files:
 #Confere as duplicações arquivo por arquivo e guarda (conferir modules/duplications)
 duplications = analyze_duplication(java_files)
 
+#Analisa o coverage
+coverage = analyze_coverage()
+
 db_required = detect_database_usage(REPO_DIR)
 
 #Faz os testes de latencia do servidor java/spring-boot
@@ -66,4 +70,4 @@ else:
     print("Benchmark ignorado porque o servidor não iniciou.")
 
 #Apresenta as infos
-generate_results(results, duplications, benchmark, latency)
+generate_results(results, duplications, benchmark, latency, coverage)

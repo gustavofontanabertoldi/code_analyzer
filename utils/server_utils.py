@@ -2,7 +2,7 @@ import subprocess
 import time
 import requests
 import os
-from endpoints_detector import detect_endpoint
+from utils.endpoints_detector import detect_endpoint
 
 from config import (
     DEFAULT_ENDPOINT,

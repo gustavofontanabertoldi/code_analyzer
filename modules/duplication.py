@@ -6,7 +6,7 @@ def analyze_duplication(java_files):
     for java_file in java_files:
         with open(java_file, "r", encoding="utf-8") as f:
             lines = [
-                lines.strip()
+                line.strip()
                 for line in f.readlines()
                 if line.strip()
             ]

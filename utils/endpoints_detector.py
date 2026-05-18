@@ -1,6 +1,6 @@
 import os
 import re
-from file_utils import find_java_files
+from utils.file_utils import find_java_files
 from config import REPO_DIR
 
 def detect_endpoint():
