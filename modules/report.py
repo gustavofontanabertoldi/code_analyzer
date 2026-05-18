@@ -1,8 +1,10 @@
 def generate_results(results, duplications, benchmark, latency, coverage):
     print("\n===== RELATÓRIO FINAL =====\n")
+    print("\n===== CBO E COMPLEXIDADE=====\n")
     for result in results:
         print(f"Arquivo: {result['file']}")
-        print(f"Complexity: {result['complexity']}")
+        for method in result["complexity"]:
+            print(f"Metodo: {method["method"]} - Complexidade: {method["complexity"]}")
         print(f"CBO: {result['cbo']}\n")
         
     print("\n===== DUPLICATIONS =====\n")
