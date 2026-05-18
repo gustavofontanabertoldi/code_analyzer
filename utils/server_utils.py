@@ -35,7 +35,10 @@ def init_server(repo_path):
     process = subprocess.Popen(
         ["mvn.cmd", "spring-boot:run"],
         cwd=repo_path,
-        env=env
+        env=env,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True
     )
 
     url = f"{SERVER_URL}{DEFAULT_ENDPOINT}"
@@ -59,7 +62,7 @@ def init_server(repo_path):
         time.sleep(1)
 
     print("Timeout do servidor.\n")
-    return process
+    return None
 
 def stop_server(process):
 

@@ -1,6 +1,7 @@
 from utils.git_utils import clone_repo
 from utils.file_utils import find_java_files
 from utils.server_utils import init_server, stop_server
+from utils.project_detector import detect_database_usage
 
 from modules.complexity import analyze_complexity
 from modules.coupling import analyze_cbo
@@ -40,11 +41,17 @@ for file in java_files:
 #Confere as duplicações arquivo por arquivo e guarda (conferir modules/duplications)
 duplications = analyze_duplication(java_files)
 
-#Faz os testes de latencia do servidor java/spring-boot
-process = init_server(REPO_DIR)
+db_required = detect_database_usage(REPO_DIR)
 
-benchmark = -1
-latency = {}
+#Faz os testes de latencia do servidor java/spring-boot
+process = None
+if db_required:
+    print(f"Projeto requer banco de dados")
+else:
+    process = init_server(REPO_DIR)
+
+benchmark = None
+latency = None
 
 if process:
     try:
