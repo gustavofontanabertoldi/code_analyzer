@@ -47,7 +47,7 @@ for file in java_files:
 duplications = analyze_duplication(java_files)
 
 #Analisa o coverage
-coverage = analyze_coverage()
+coverage = analyze_coverage(REPO_DIR)
 
 db_required = detect_database_usage(REPO_DIR)
 

@@ -12,10 +12,20 @@ def analyze_complexity(path):
             for _, node in method:
                 if isinstance(node, javalang.tree.IfStatement):
                     complexity += 1
+
+            if complexity <= 10:
+                status = "Baixo"
+            elif complexity <= 20:
+                status = "Médio"
+            elif complexity <=50:
+                status = "Alto"
+            else:
+                status = "Instável"
             
             results.append({
                 "method": method.name,
-                "complexity": complexity
+                "complexity": complexity,
+                "status": status
             })
         
         return results
