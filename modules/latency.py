@@ -1,37 +1,40 @@
 import time
-import requests
-from concurrent.futures import ThreadPoolExecutor
+import asyncio
+import aiohttp
 from config import SERVER_URL
-from utils.endpoints_detector import detect_endpoint
 
-def request():
-    endpoint = detect_endpoint()
-    return requests.get(
-        f"{SERVER_URL}{endpoint}",
-        timeout=10
-    )
+async def fetch(session, url):
+    try:
+        async with session.get(url, timeout=10) as response:
+            await response.read()
+            return response.status
+    except Exception:
+        return None
 
-def analyze_latency():
+async def run_load_test(url, total_requests):
+    async with aiohttp.ClientSession() as session:
+        tasks = [fetch(session, url) for _ in range(total_requests)]
+        await asyncio.gather(*tasks)
+
+# CORRIGIDO: Recebe o endpoint diretamente do Main
+def analyze_latency(endpoint):
+    url = f"{SERVER_URL}{endpoint}"
+    
     loads = [100, 500, 1000]
     results = {}
 
     for load in loads:
         try:
+            print(f"Disparando carga assíncrona de {load} requisições...")
             init = time.time()
-            with ThreadPoolExecutor(max_workers=50) as executor:
-                futures = [
-                    executor.submit(request)
-                    for _ in range(load)
-                ]
-
-                for future in futures:
-                    future.result()
-
+            
+            asyncio.run(run_load_test(url, load))
+            
             end = time.time()
-            total = end - init
-            average = total / load
+            total_time = end - init
+            average = total_time / load
             results[load] = average
-
+            
         except Exception as e:
             print(f"Erro carga {load}: {e}")
 

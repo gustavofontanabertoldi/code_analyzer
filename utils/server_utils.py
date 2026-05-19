@@ -15,18 +15,15 @@ from utils.project_detector import (
     choose_java_version
 )
 
-def init_server(repo_path):
+def init_server(repo_path, endpoint):
 
     spring_version = detect_spring_boot_version(repo_path)
-
     print(f"Spring Boot detectado: {spring_version}")
 
     java_version = choose_java_version(spring_version)
-
     print(f"Usando Java {java_version}")
 
     java_home = JAVA_PATHS.get(java_version)
-
     env = os.environ.copy()
 
     if java_home:
@@ -37,23 +34,20 @@ def init_server(repo_path):
         ["mvn.cmd", "spring-boot:run"],
         cwd=repo_path,
         env=env,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
         text=True
     )
-    endpoint = detect_endpoint()
 
+    # CORRIGIDO: Usa a variável limpa recebida por parâmetro
     url = f"{SERVER_URL}{endpoint}"
 
     for _ in range(60):
-
         try:
             response = requests.get(url, timeout=2)
-
             if response.status_code < 500:
                 print("Servidor iniciado com sucesso!\n")
                 return process
-
         except:
             pass
 

@@ -7,17 +7,13 @@ def analyze_coverage():
     test_files = 0
     
     for file_path in files:
-        file_name = os.basename(file_path)
-        root_dir = os.path.dirname(file_path)
+        rel_path = os.path.relpath(file_path, REPO_DIR)
         
-        file_lower = file_name.lower()
-        root_lower = root_dir.lower()
+        rel_path_normalized = rel_path.replace("\\", "/")
         
         is_test_file = (
-            file_name.endswith("Test.java")
-            or file_name.endswith("Tests.java")
-            or "test" in file_lower
-            or "test" in root_lower
+            "src/test/java/" in rel_path_normalized 
+            and rel_path_normalized.endswith(".java")
         )
         
         if is_test_file:
@@ -27,10 +23,10 @@ def analyze_coverage():
     if total_java_files == 0:
         coverage = 0.0
     else:
-        coverage = (test_files/total_java_files) * 100
+        coverage = (test_files / total_java_files) * 100
     
     return {
-        "test_files":test_files,
-        "total_java_files":total_java_files,
+        "test_files": test_files,
+        "total_java_files": total_java_files,
         "coverage": coverage
     }

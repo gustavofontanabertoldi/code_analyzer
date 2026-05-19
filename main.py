@@ -2,6 +2,7 @@ from utils.git_utils import clone_repo
 from utils.file_utils import find_java_files
 from utils.server_utils import init_server, stop_server
 from utils.project_detector import detect_database_usage
+from utils.endpoints_detector import detect_endpoint
 
 from modules.complexity import analyze_complexity
 from modules.coupling import analyze_cbo
@@ -21,6 +22,9 @@ clone_repo(url)
 
 #Filtra os arquivos .java de outros arquivos (Conferir utils/file_utils)
 java_files = find_java_files(REPO_DIR)
+
+#Detecta endpoint para testes dinamicos
+endpoint_alvo = detect_endpoint(java_files)
 
 #lista de dados das análises dos arquivos.java
 results = []
@@ -52,18 +56,16 @@ process = None
 if db_required:
     print(f"Projeto requer banco de dados")
 else:
-    process = init_server(REPO_DIR)
+    process = init_server(REPO_DIR, endpoint_alvo)
 
 benchmark = None
 latency = None
 
-
-
 if process:
     try:
         #Conferir modules/benchmark e modules/latency
-        benchmark = run_benchmark()
-        latency = analyze_latency()
+        benchmark = run_benchmark(endpoint_alvo)
+        latency = analyze_latency(endpoint_alvo)
     finally:
         stop_server(process)
 else:

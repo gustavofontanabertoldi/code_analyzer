@@ -1,11 +1,8 @@
-import os
 import re
-from utils.file_utils import find_java_files
-from config import REPO_DIR
 
-def detect_endpoint():
+def detect_endpoint(java_files):
     candidates = []
-    java_files = find_java_files(REPO_DIR)
+    
     for file in java_files:
         try:
             with open(file, "r", encoding="utf-8") as f:
