@@ -10,7 +10,7 @@ from modules.duplication import analyze_duplication
 from modules.benchmark import run_benchmark
 from modules.report import generate_results
 from modules.latency import analyze_latency
-from modules.coverage import analyze_coverage
+from modules.coverage import run_coverage_analysis
 
 from config import REPO_DIR
 
@@ -47,7 +47,7 @@ for file in java_files:
 duplications = analyze_duplication(java_files)
 
 #Analisa o coverage
-coverage = analyze_coverage(REPO_DIR)
+coverage = run_coverage_analysis(REPO_DIR)
 
 db_required = detect_database_usage(REPO_DIR)
 

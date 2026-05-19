@@ -8,7 +8,7 @@ def run_coverage_analysis(repo_path):
     #Executa o Maven no repositório alvo para rodar os testes e gerar o report
     try:
         cmd = ["mvn", "clean", "test", "jacoco:report"]
-        subprocess.run(cmd, cwd=repo_path, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.run(cmd, cwd=repo_path, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     except subprocess.CalledProcessError:
         print("Aviso: Falha ao rodar os testes do Maven ou o JaCoCo não está configurado no alvo.")
         return None
