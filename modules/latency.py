@@ -16,7 +16,6 @@ async def run_load_test(url, total_requests):
         tasks = [fetch(session, url) for _ in range(total_requests)]
         await asyncio.gather(*tasks)
 
-# CORRIGIDO: Recebe o endpoint diretamente do Main
 def analyze_latency(endpoint):
     url = f"{SERVER_URL}{endpoint}"
     
