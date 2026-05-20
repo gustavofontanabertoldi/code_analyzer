@@ -1,0 +1,13 @@
+# Ambiente Virtual do Python
+.venv/
+__pycache__/
+*.pyc
+
+# Pasta temporária de testes (onde os clones acontecem)
+temp/
+
+# Relatório gerado localmente
+dashboard_qualidade.html
+
+# Arquivos do VS Code
+.vscode/
