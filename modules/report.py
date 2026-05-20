@@ -32,13 +32,13 @@ def generate_results(results, duplications, benchmark, latency, coverage):
     if motivos_falha:
         status_global = "REPROVADO NA ISO/IEC 25010"
         diagnostico = f"Este código falha na conformidade devido a: {', '.join(motivos_falha)}."
-        cor_status = "#dc3545" # Vermelho
+        cor_status = "#dc3545"
     else:
         status_global = "APROVADO"
         diagnostico = "O repositório atende aos critérios mínimos de manutenibilidade e testabilidade avaliados."
-        cor_status = "#28a745" # Verde
+        cor_status = "#28a745"
 
-    #TEMPLATE HTML (JINJA2) COM CSS MODERNO EMBUTIDO
+    #Template HTML com jinja2
     html_template = """
     <!DOCTYPE html>
     <html lang="pt-br">
