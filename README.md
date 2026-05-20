@@ -1,4 +1,4 @@
-# 🔍 Automated Code Analyzer (ISO/IEC 25010)
+# Automated Code Analyzer (ISO/IEC 25010)
 
 ![Python](https://img.shields.io/badge/Python-3.13+-blue.svg)
 ![Maven](https://img.shields.io/badge/Maven-3.9+-orange.svg)
