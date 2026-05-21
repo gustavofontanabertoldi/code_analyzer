@@ -51,25 +51,30 @@ coverage = run_coverage_analysis(REPO_DIR)
 
 db_required = detect_database_usage(REPO_DIR)
 
-#Faz os testes de latencia do servidor java/spring-boot
-process = None
-if db_required:
-    print(f"Projeto requer banco de dados")
-else:
-    process = init_server(REPO_DIR, endpoint_alvo)
-
 benchmark = None
 latency = None
 
-if process:
-    try:
-        #Conferir modules/benchmark e modules/latency
-        benchmark = run_benchmark(endpoint_alvo)
-        latency = analyze_latency(endpoint_alvo)
-    finally:
-        stop_server(process)
-else:
+# Cenário A: O projeto precisa de um banco externo que não temos instalado
+if db_required:
+    print("⚠️ Análise Dinâmica cancelada: O projeto requer banco de dados externo configurado.")
     print("Benchmark ignorado porque o servidor não iniciou.")
 
-#Apresenta as infos
+# Cenário B: O projeto não pede banco, podemos tentar ligar o servidor
+else:
+    print("Iniciando o servidor em background para testes dinâmicos...")
+    process = init_server(REPO_DIR, endpoint_alvo)
+
+    if process:
+        try:
+            print("🟢 Servidor iniciado com sucesso! Executando benchmarks...")
+            benchmark = run_benchmark(endpoint_alvo)
+            latency = analyze_latency(endpoint_alvo)
+        finally:
+            print("Finalizando o servidor em background...")
+            stop_server(process)
+    else:
+        # Se cair aqui, a culpa NÃO é do banco. É do comando ou do framework
+        print("❌ Falha crítica: O processo do servidor não pôde ser iniciado.")
+        print("Benchmark ignorado porque o servidor não iniciou.")
+
 generate_results(results, duplications, benchmark, latency, coverage)
