@@ -1,5 +1,15 @@
 import re
 
+
+def normalize_endpoint(endpoint):
+    if not endpoint:
+        return "/"
+    endpoint = endpoint.strip()
+    if not endpoint.startswith("/"):
+        endpoint = f"/{endpoint}"
+    return endpoint
+
+
 def detect_endpoint(java_files):
     candidates = []
     
@@ -14,7 +24,11 @@ def detect_endpoint(java_files):
             )
             
             for _, endpoint in mappings:
-                candidates.append(endpoint)
+                candidates.append(normalize_endpoint(endpoint))
+
+            path_mappings = re.findall(r'@Path\("([^"]+)"\)', content)
+            for endpoint in path_mappings:
+                candidates.append(normalize_endpoint(endpoint))
         except Exception as e:
             print(f"Erro ao ler arquivo {file}: {e}")
         

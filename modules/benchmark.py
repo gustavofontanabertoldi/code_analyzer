@@ -2,11 +2,11 @@ import time
 import requests
 from config import SERVER_URL
 
-def run_benchmark(endpoint):
+def run_benchmark(endpoint, server_url=SERVER_URL):
     try:
         init = time.time()
         response = requests.get(
-            f"{SERVER_URL}{endpoint}",
+            f"{server_url}{endpoint}",
             timeout=10
         )
         print(f"Status Code do Benchmark: {response.status_code}")

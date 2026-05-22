@@ -19,8 +19,8 @@ async def run_load_test(url, total_requests):
         tasks = [fetch(session, url) for _ in range(total_requests)]
         await asyncio.gather(*tasks)
 
-def analyze_latency(endpoint):
-    url = f"{SERVER_URL}{endpoint}"
+def analyze_latency(endpoint, server_url=SERVER_URL):
+    url = f"{server_url}{endpoint}"
     
     loads = [100, 500, 1000, 5000]
     raw_times = {}
