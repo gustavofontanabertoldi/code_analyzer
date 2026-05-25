@@ -1,4 +1,6 @@
 import javalang
+import os
+
 from utils.java_parser import parse_java_file
 
 PRIMITIVOS_E_WRAPPERS = {
@@ -45,5 +47,6 @@ def analyze_cbo(path):
         
         return len(filtered_classes)
     except Exception as e:
-        print(f"Erro: {e}")
-        return -1
+        message = str(e) or type(e).__name__
+        print(f"Erro CBO em {os.path.basename(path)}: {message}")
+        return 0

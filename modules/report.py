@@ -7,7 +7,11 @@ def generate_results(results, duplications, benchmark, latency, coverage):
     cleaned_results = []
     
     for r in results:
-        total_cbo += r['cbo']
+        cbo = r.get('cbo', 0)
+        if cbo is None or cbo < 0:
+            cbo = 0
+
+        total_cbo += cbo
         for m in r['complexity']:
             if m['complexity'] > max_complexity:
                 max_complexity = m['complexity']
@@ -15,7 +19,7 @@ def generate_results(results, duplications, benchmark, latency, coverage):
         cleaned_results.append({
             "file_full": r['file'],
             "file_short": os.path.basename(r['file']),
-            "cbo": r['cbo'],
+            "cbo": cbo,
             "complexity": r['complexity']
         })
                 

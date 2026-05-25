@@ -1,3 +1,5 @@
+import os
+
 import javalang
 from utils.java_parser import parse_java_file
 
@@ -30,5 +32,6 @@ def analyze_complexity(path):
         
         return results
     except Exception as e:
-        print(f"Erro complexidade: {e}")
+        message = str(e) or type(e).__name__
+        print(f"Erro complexidade em {os.path.basename(path)}: {message}")
         return []
